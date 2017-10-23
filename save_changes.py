@@ -3,6 +3,8 @@ import zipfile
 
 from git import Repo
 
+import config as CONFIG
+
 FILE_EXTENSIONS = (".ev3")
 
 def save_changes(from_dir, to_dir):
@@ -38,9 +40,10 @@ def save_changes(from_dir, to_dir):
     repo.index.commit(message)
 
     print("Synchronizing...")
+    # repo.remotes.origin.pull()
+    # repo.remotes.origin.push()
+    
     
 
 if __name__ == "__main__":
-    mindstorms_dir = r"C:\Users\Alec Munro\Documents\LEGO Creations\MINDSTORMS EV3 Projects"
-    git_dir = r"C:\work\lego\fll"
-    save_changes(mindstorms_dir, git_dir)
+    save_changes(CONFIG.mindstorms_dir, CONfIG.git_dir)
