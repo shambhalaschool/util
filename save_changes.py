@@ -5,7 +5,7 @@ from git import Repo
 
 import config as CONFIG
 
-FILE_EXTENSIONS = (".ev3")
+FILE_EXTENSIONS = (".ev3", ".nxt")
 
 def save_changes(from_dir, to_dir):
     print("Extracting project files from {} to {}\n".format(from_dir, to_dir))
@@ -19,14 +19,14 @@ def save_changes(from_dir, to_dir):
     
 
     repo = Repo(to_dir)
-    if not repo.is_dirty():
+    if not repo.is_dirty() and not repo.untracked_files:
         print("Not seeing any changes, aborting")
         return
 
     print("Adding untracked files to Git\n")
-    for new_file in repo.untracked_files:
-        repo.index.add(new_file)
+    repo.index.add(repo.untracked_files)
 
+    import pdb; pdb.set_trace()
     print("I see these changes:")
     for diff in repo.index.diff(None):
         print("{} - {}".format(diff.change_type, diff.a_path))
@@ -46,4 +46,4 @@ def save_changes(from_dir, to_dir):
     
 
 if __name__ == "__main__":
-    save_changes(CONFIG.mindstorms_dir, CONfIG.git_dir)
+    save_changes(CONFIG.mindstorms_dir, CONFIG.git_dir)
